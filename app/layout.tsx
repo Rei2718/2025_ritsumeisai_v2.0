@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${zenKurenaido.variable} antialiased bg-background text-primary`}
+        className={`${zenKurenaido.variable} antialiased bg-[var(--background)] text-[var(--secondary)]`}
       >
         {children}
       </body>
