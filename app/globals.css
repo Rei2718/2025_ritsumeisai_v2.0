@@ -2,11 +2,11 @@
 @import "tw-animate-css";
 
 :root{
-  --primary: #dbb778;
-  --secondary: #fafafa;
-  --accent: #dbb778;
+  --primary: #879daa;
+  --primary-foreground: #e1fec9;
+  --secondary: #212121;
+  --secondary-foreground: #fafafa;
   --background: #171717;
-  --foreground: #212121;
   --muted: #282828;
   --point_1: #A7BED3;
   --point_2: #C6E2E9;
