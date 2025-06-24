@@ -33,51 +33,53 @@ export default function Home() {
         <HomeScreen />
       </TabsContent>
 
-      <TabsList className="w-11/12 max-w-lg mx-auto fixed bottom-4 left-1/2 -translate-x-1/2 z-20 grid grid-cols-[1fr_auto] gap-3 bg-transparent">
-        {/* Main navigation controls */}
-        <div className="grid grid-cols-4 place-items-center rounded-full bg-[var(--primary)]">
+      <TabsList className="fixed bottom-2 left-2 right-2 transform translate-x-0 w-auto max-w-xl mx-auto z-20 grid grid-cols-[4fr_auto] bg-transparent">
+        {/* Main navigation controls spanning flexible width */}
+        <div className="grid grid-cols-4 rounded-full bg-[var(--primary)] h-full ml-2 mr-1">
           <TabsTrigger
             value="home"
-            className="group h-12 w-12 rounded-full transition-all duration-200 ease-in-out text-[var(--muted)]/60 data-[state=active]:text-[var(--primary-foreground)]"
+            className="group w-full rounded-full transition-all duration-200 ease-in-out text-[var(--muted)]/60 data-[state=active]:text-[var(--primary-foreground)] py-3"
           >
-            <BsHouseDoor className="scale-140 group-data-[state=active]:hidden" />
-            <BsHouseDoorFill className="scale-140 hidden group-data-[state=active]:block" />
+            <BsHouseDoor className="scale-160 group-data-[state=active]:hidden" />
+            <BsHouseDoorFill className="scale-160 hidden group-data-[state=active]:block" />
           </TabsTrigger>
 
           <TabsTrigger
             value="new"
-            className="group h-12 w-12 rounded-full transition-all duration-200 ease-in-out text-[var(--muted)]/60 data-[state=active]:text-[var(--primary-foreground)]"
+            className="group w-full rounded-full transition-all duration-200 ease-in-out text-[var(--muted)]/60 data-[state=active]:text-[var(--primary-foreground)] py-3"
           >
-            <BsGrid className="scale-140 group-data-[state=active]:hidden" />
-            <BsGridFill className="scale-140 hidden group-data-[state=active]:block" />
+            <BsGrid className="scale-160 group-data-[state=active]:hidden" />
+            <BsGridFill className="scale-160 hidden group-data-[state=active]:block" />
           </TabsTrigger>
 
           <TabsTrigger
             value="radio"
-            className="group h-12 w-12 rounded-full transition-all duration-200 ease-in-out text-[var(--muted)]/60 data-[state=active]:text-[var(--primary-foreground)]"
+            className="group w-full rounded-full transition-all duration-200 ease-in-out text-[var(--muted)]/60 data-[state=active]:text-[var(--primary-foreground)] py-3"
           >
-            <BsBroadcast className="scale-140 group-data-[state=active]:hidden" />
-            <BsBroadcast className="scale-140 hidden group-data-[state=active]:block" />
+            <BsBroadcast className="scale-160 group-data-[state=active]:hidden" />
+            <BsBroadcast className="scale-160 hidden group-data-[state=active]:block" />
           </TabsTrigger>
 
           <TabsTrigger
             value="library"
-            className="group h-12 w-12 rounded-full transition-all duration-200 ease-in-out text-[var(--muted)]/60 data-[state=active]:text-[var(--primary-foreground)]"
+            className="group w-full rounded-full transition-all duration-200 ease-in-out text-[var(--muted)]/60 data-[state=active]:text-[var(--primary-foreground)] py-3"
           >
-            <BsMusicNoteList className="scale-140 group-data-[state=active]:hidden" />
-            <BsMusicNoteList className="scale-140 hidden group-data-[state=active]:block" />
+            <BsMusicNoteList className="scale-160 group-data-[state=active]:hidden" />
+            <BsMusicNoteList className="scale-160 hidden group-data-[state=active]:block" />
           </TabsTrigger>
         </div>
 
-        {/* Search button */}
-        <div className="grid place-items-center rounded-full backdrop-blur-xl bg-[var(--primary)]">
-          <TabsTrigger
-            value="search"
-            className="group h-12 w-12 rounded-full transition-all duration-200 ease-in-out text-[var(--muted)]/60 data-[state=active]:text-[var(--primary-foreground)]"
-          >
-            <BsSearch className="scale-140 group-data-[state=active]:hidden" />
-            <BsSearch className="scale-140 hidden group-data-[state=active]:block" />
-          </TabsTrigger>
+        {/* Search button with fixed width */}
+        <div className="w-12 grid place-items-center ml-1 mr-2">
+          <div className="rounded-full backdrop-blur-xl bg-[var(--primary)] w-12 h-12 grid place-items-center">
+            <TabsTrigger
+              value="search"
+              className="group w-full h-full rounded-full transition-all duration-200 ease-in-out text-[var(--muted)]/60 data-[state=active]:text-[var(--primary-foreground)]"
+            >
+              <BsSearch className="scale-160 group-data-[state=active]:hidden" />
+              <BsSearch className="scale-160 hidden group-data-[state=active]:block" />
+            </TabsTrigger>
+          </div>
         </div>
       </TabsList>
     </Tabs>
