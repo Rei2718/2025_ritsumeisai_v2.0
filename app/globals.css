@@ -2,16 +2,16 @@
 @import "tw-animate-css";
 
 :root{
-  --ghost_white: #f6f5fa;
-  --eeire_black: #212121;
-  --honeydew: #cfdeca;
-  --vanila: #eff0a3;
-  --alice_blue: #d8dfe9;
-  --muted: #282828;
-  --point_1: #A7BED3;
-  --point_2: #C6E2E9;
-  --point_3: #F1FFC4;
-  --point_4: #D0E3F2;
-  --point_5: #FFCAAF;
-  --point_6: #DAB894;
+  --ghost_white: #F7F6FB;
+  --dark_black: #171717;
+  --eeire_black: #282528;
+  --honeydew: #CCCCFD;
+  --alice_blue: #D8DFE9;
+  --muted_white: #898989;
+  --point_1: #82E3CF;
+  --point_2: #58BFC8;
+  --point_3: #2E9ACB;
+  --point_4: #F6EE4D;
+  --point_5: #C1DA4B;
+  --point_6: #73B553;
 }

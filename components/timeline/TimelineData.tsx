@@ -17,7 +17,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "09:30 AM",
         title: "Registration & Welcome Coffee",
         description: "Check-in and network with fellow attendees while enjoying complimentary refreshments.",
-        labels: ["Live"],
+        labels: ["LIVE"],
         attendees: 150,
         location: "Main Lobby",
         pointColor: "point_1"
@@ -27,7 +27,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "10:30 AM",
         title: "Opening Keynote: The Future of Technology",
         description: "Join our distinguished speaker as they explore emerging trends in AI and machine learning.",
-        labels: ["High Priority"],
+        labels: ["VIP"],
         attendees: 250,
         location: "Grand Hall",
         pointColor: "point_2"
@@ -35,9 +35,9 @@ export const TimelineData: TabDataTypes[] = [
       {
         startTime: "10:30 AM",
         endTime: "11:30 AM",
-        title: "Panel Discussion: Digital Transformation",
+        title: "LIVE Discussion: Digital Transformation",
         description: "Industry experts discuss the challenges and opportunities of digital transformation.",
-        labels: ["Panel"],
+        labels: ["LIVE"],
         attendees: 180,
         location: "Conference Room A",
         pointColor: "point_3"
@@ -47,7 +47,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "12:00 PM",
         title: "Coffee Break & Networking",
         description: "Take a break to recharge and connect with other participants.",
-        labels: ["Break"],
+        labels: ["LIVE"],
         attendees: 200,
         location: "Exhibition Area",
         pointColor: "point_4"
@@ -57,7 +57,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "01:30 PM",
         title: "Workshop: Hands-on Development",
         description: "Interactive workshop where participants will build real-world applications.",
-        labels: ["Workshop"],
+        labels: ["VIP"],
         attendees: 80,
         location: "Lab Room 1",
         pointColor: "point_5"
@@ -89,7 +89,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "10:00 AM",
         title: "Global Market Trends Analysis",
         description: "Deep dive into emerging markets and investment opportunities worldwide.",
-        labels: ["Analytics"],
+        labels: ["LIVE"],
         attendees: 300,
         location: "Main Auditorium",
         pointColor: "point_1"
@@ -99,7 +99,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "11:30 AM",
         title: "Strategic Leadership Workshop",
         description: "Interactive session on leadership strategies for the modern business landscape.",
-        labels: ["Leadership"],
+        labels: ["VIP"],
         attendees: 150,
         location: "Workshop Hall",
         pointColor: "point_2"
@@ -109,7 +109,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "12:30 PM",
         title: "Innovation Showcase",
         description: "Startup pitches and innovation demonstrations from leading entrepreneurs.",
-        labels: ["Innovation"],
+        labels: ["LIVE"],
         attendees: 400,
         location: "Innovation Center",
         pointColor: "point_3"
@@ -119,7 +119,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "02:00 PM",
         title: "Business Networking Lunch",
         description: "Structured networking session with industry-specific roundtables.",
-        labels: ["Networking"],
+        labels: ["VIP"],
         attendees: 500,
         location: "Grand Ballroom",
         pointColor: "point_4"
@@ -141,7 +141,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "09:30 AM",
         title: "Future of Education Keynote",
         description: "Exploring how technology is transforming learning and teaching methodologies.",
-        labels: ["Keynote"],
+        labels: ["VIP"],
         attendees: 350,
         location: "Main Hall",
         pointColor: "point_5"
@@ -151,7 +151,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "10:30 AM",
         title: "Digital Classroom Technologies",
         description: "Hands-on demonstration of cutting-edge educational technologies and tools.",
-        labels: ["Tech Demo"],
+        labels: ["LIVE"],
         attendees: 200,
         location: "Tech Lab",
         pointColor: "point_6"
@@ -161,7 +161,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "12:00 PM",
         title: "Curriculum Design Workshop",
         description: "Interactive workshop on designing engaging and effective modern curricula.",
-        labels: ["Workshop"],
+        labels: ["VIP"],
         attendees: 100,
         location: "Workshop Room A",
         pointColor: "point_1"
@@ -171,7 +171,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "01:00 PM",
         title: "Student Success Stories",
         description: "Inspiring presentations from students and recent graduates.",
-        labels: ["Inspiration"],
+        labels: ["LIVE"],
         attendees: 300,
         location: "Auditorium",
         pointColor: "point_2"
@@ -181,7 +181,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "02:30 PM",
         title: "Educator's Networking Lunch",
         description: "Connect with fellow educators and share best practices.",
-        labels: ["Networking"],
+        labels: ["VIP"],
         attendees: 350,
         location: "Dining Hall",
         pointColor: "point_3"
@@ -203,7 +203,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "07:00 PM",
         title: "Pitch Night Kickoff",
         description: "60-second pitches from aspiring entrepreneurs to form weekend teams.",
-        labels: ["Pitches"],
+        labels: ["LIVE"],
         attendees: 400,
         location: "Main Stage",
         pointColor: "point_4"
@@ -213,7 +213,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "08:00 PM",
         title: "Team Formation",
         description: "Network and form teams around the most compelling ideas.",
-        labels: ["Networking"],
+        labels: ["VIP"],
         attendees: 400,
         location: "Open Space",
         pointColor: "point_5"
@@ -223,7 +223,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "09:00 PM",
         title: "Mentor Speed Dating",
         description: "Quick sessions with experienced mentors from various industries.",
-        labels: ["Mentorship"],
+        labels: ["VIP"],
         attendees: 300,
         location: "Mentor Lounge",
         pointColor: "point_6"
@@ -233,7 +233,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "11:00 PM",
         title: "Hackathon Begins",
         description: "Teams start working on their MVP with support from mentors.",
-        labels: ["Building"],
+        labels: ["LIVE"],
         attendees: 350,
         location: "Workspace",
         pointColor: "point_1"
@@ -243,7 +243,7 @@ export const TimelineData: TabDataTypes[] = [
         endTime: "01:00 AM",
         title: "Late Night Coding Session",
         description: "Dedicated time for development with pizza and energy drinks provided.",
-        labels: ["Coding"],
+        labels: ["LIVE"],
         attendees: 250,
         location: "Dev Zone",
         pointColor: "point_2"
