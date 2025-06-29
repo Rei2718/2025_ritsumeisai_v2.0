@@ -3,7 +3,6 @@ import { Zen_Kurenaido } from "next/font/google";
 import "./globals.css";
 
 const zenKurenaido = Zen_Kurenaido({
-  variable: "--font-zen-kurenaido",
   weight: "400",
   subsets: ['latin'],
   display: 'swap',
@@ -22,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${zenKurenaido.variable} antialiased bg-[var(--eeire_black)] text-[var(--ghost_white)]`}
+        className={`${zenKurenaido.className} antialiased bg-[var(--eeire_black)] text-[var(--ghost_white)]`}
       >
         {children}
       </body>

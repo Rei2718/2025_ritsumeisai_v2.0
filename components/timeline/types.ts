@@ -8,9 +8,12 @@ export interface TimelineDataTypes {
   title: string;
   description: string;
   labels: string[];
-  attendees?: number;
   location?: string;
   pointColor: PointColor;
+  date: string;
+  classroom?: string;
+  pr?: string;
+  poster?: string;
 }
 
 export interface TabDataTypes {

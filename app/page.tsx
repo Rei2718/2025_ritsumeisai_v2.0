@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import HomeScreen from "@/screen/Home";
-import { TimelineDemo } from "@/screen/Timeline";
 import {
   BsHouseDoor,
   BsHouseDoorFill,
@@ -19,6 +18,7 @@ import {
   BsMusicNoteList,
   BsSearch,
 } from "react-icons/bs";
+import { TimelineScreen } from "@/screen/Timeline";
 
 export default function Home() {
   return (
@@ -30,7 +30,7 @@ export default function Home() {
         <HomeScreen />
       </TabsContent>
       <TabsContent value="new" className="w-full">
-        <TimelineDemo />
+        <TimelineScreen />
       </TabsContent>
       <TabsContent value="radio" className="w-full">
         <HomeScreen />
@@ -42,7 +42,7 @@ export default function Home() {
         <HomeScreen />
       </TabsContent>
 
-      <TabsList className="fixed bottom-2 left-2 right-2 transform translate-x-0 w-auto max-w-xl mx-auto z-20 grid grid-cols-[4fr_auto] bg-transparent">
+      <TabsList className="fixed bottom-6 left-6 right-6 transform translate-x-0 w-auto max-w-xl mx-auto z-20 grid grid-cols-[4fr_auto] bg-transparent">
         {/* Main navigation controls spanning flexible width */}
         <div className="grid grid-cols-4 rounded-full h-full ml-2 mr-1 border border-[var(--ghost_white)]/10 backdrop-blur-xs bg-transparent">
           <TabsTrigger

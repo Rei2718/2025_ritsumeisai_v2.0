@@ -1,17 +1,83 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-:root{
-  --ghost_white: #F7F6FB;
-  --dark_black: #171717;
-  --eeire_black: #282528;
-  --honeydew: #CCCCFD;
-  --alice_blue: #D8DFE9;
-  --muted_white: #898989;
-  --point_1: #82E3CF;
-  --point_2: #58BFC8;
-  --point_3: #2E9ACB;
-  --point_4: #F6EE4D;
-  --point_5: #C1DA4B;
-  --point_6: #73B553;
+:root {
+  /* ========== Primary Brand Colors ========== */
+  /* ダークテーマでも温かみと視認性を両立するオレンジ系 */
+  --brand-primary: #FF9F0A;     /* System Orange (HIG) */
+  --brand-secondary: #FFD55F;   /* Light Orange Accent */
+  --brand-tertiary: #FF7A00;    /* Darker Emphasis */
+
+  /* ========== Semantic Colors (Apple HIG) ========== */
+  --color-success: #30D158;     /* System Green */
+  --color-warning: #FFD60A;     /* System Yellow */
+  --color-error: #FF375F;       /* System Red */
+  --color-info: #64D2FF;        /* System Blue */
+
+  /* ========== Background Colors (Dark Theme Layers) ========== */
+  --bg-primary: #121214;        /* Almost Black */
+  --bg-secondary: #1C1C1E;      /* Dark Gray (cards) */
+  --bg-tertiary: #2C2C2E;       /* Floating surfaces */
+  --bg-elevated: #3A3A3C;       /* Elevated controls */
+
+  /* ========== Text Colors (High Contrast, Off-White) ========== */
+  --text-primary: #F2F2F7;      /* Off-White Main */
+  --text-secondary: rgba(242, 242, 247, 0.85);  /* Secondary */
+  --text-tertiary: rgba(242, 242, 247, 0.60);   /* Tertiary */
+  --text-quaternary: rgba(242, 242, 247, 0.30); /* Disabled */
+
+  /* ========== Surface Colors ========== */
+  --surface-primary: rgba(255, 255, 255, 0.05);   /* Transparent Surface */
+  --surface-secondary: rgba(255, 255, 255, 0.07); /* Subtle Surface */
+  --surface-hover: rgba(255, 255, 255, 0.10);     /* Hover */
+  --surface-active: rgba(255, 255, 255, 0.15);    /* Active */
+
+  /* ========== Border Colors ========== */
+  --border-subtle: rgba(255, 255, 255, 0.06);     /* Thin */
+  --border-default: rgba(255, 255, 255, 0.10);    /* Regular */
+  --border-strong: rgba(255, 255, 255, 0.20);     /* Strong */
+
+  /* ========== Point Colors (Category Indicators) ========== */
+  --point-cyan: #5AC8FA;
+  --point-blue: #007AFF;
+  --point-indigo: #5856D6;
+  --point-yellow: #FFCC00;
+  --point-green: #34C759;
+  --point-mint: #00C7BE;
+
+  /* ========== Legacy Mappings ========== */
+  --ghost_white: var(--text-primary);
+  --dark_black: var(--bg-primary);
+  --eeire_black: var(--bg-secondary);
+  --honeydew: var(--brand-primary);
+  --alice_blue: var(--text-secondary);
+  --muted_white: var(--text-tertiary);
+  --point_1: var(--point-cyan);
+  --point_2: var(--point-blue);
+  --point_3: var(--point-indigo);
+  --point_4: var(--point-yellow);
+  --point_5: var(--point-green);
+  --point_6: var(--point-mint);
+}
+
+/* ========== Global Styles ========== */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========== Focus Ring (Apple HIG) ========== */
+*:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+/* ========== Scrollbar Hidden Globally ========== */
+* {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+*::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, Edge */
 }
