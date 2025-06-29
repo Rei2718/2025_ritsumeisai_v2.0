@@ -13,27 +13,27 @@ export const TimelineData: TabDataTypes[] = [
     },
     entries: [
       {
-        startTime: "10:25",
-        endTime: "10:50",
+        startTime: "4:25",
+        endTime: "15:50",
         title: "Another World Assemble",
         description: "3年A組 - 誰も見たことのないショーを開催。世界中の特徴豊かな人たちが集まる",
         labels: ["高校3年", "7/5"],
         location: "アリーナ",
         pointColor: "point_1" as PointColor,
-        date: "7/5",
+        date: "6/30",
         classroom: "3年A組",
         pr: undefined,
         poster: undefined
       },
       {
-        startTime: "11:20",
+        startTime: "4:20",
         endTime: "11:45",
         title: "土曜日のマサミタウン",
         description: "3年B組 - 生徒たちが自分だけが信じる\"説\"をプレゼン。VTRとスタジオで検証",
         labels: ["高校3年", "7/5"],
         location: "アリーナ",
         pointColor: "point_2" as PointColor,
-        date: "7/5",
+        date: "6/30",
         classroom: "3年B組",
         pr: undefined,
         poster: undefined

@@ -27,3 +27,14 @@ export interface TabDataTypes {
   };
   entries: TimelineDataTypes[];
 }
+
+export function isEntryActive(entry: TimelineDataTypes): boolean {
+  const now = new Date();
+  const [month, day] = entry.date.split("/").map(Number);
+  const [startH, startM] = entry.startTime.split(":").map(Number);
+  const [endH, endM] = entry.endTime.split(":").map(Number);
+  const year = now.getFullYear();
+  const start = new Date(year, month - 1, day, startH, startM, 0);
+  const end = new Date(year, month - 1, day, endH, endM, 0);
+  return now >= start && now <= end;
+}

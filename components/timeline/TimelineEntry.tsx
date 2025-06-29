@@ -18,14 +18,14 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item }) => (
     exit={{ opacity: 0, y: -10, transition: { duration: 0.5 } }}
   >
     <div className="py-3">
-      <motion.div 
-        className="relative bg-[var(--bg-secondary)] rounded-2xl p-4 pl-8" 
+      <motion.div
+        className="relative bg-[var(--bg-secondary)] rounded-2xl pr-4 pl-8" 
         initial={{ scale: 0.95, opacity: 0 }} 
         animate={{ scale: 1, opacity: 1, transition: { duration: 0.4 } }} 
         exit={{ scale: 0.95, opacity: 0, transition: { duration: 0.4 } }}
       >
         <span 
-          className="absolute left-0 w-[6px] top-4 bottom-4 rounded-full" 
+          className="absolute left-0 w-[6px] top-1 bottom-1 rounded-full" 
           style={{ backgroundColor: `var(--${item.pointColor})` }} 
           aria-hidden="true" 
         />
