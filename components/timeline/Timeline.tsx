@@ -46,14 +46,14 @@ export const Timeline: React.FC<TimelineProps> = () => {
         <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
           {/* タイトルセクション */}
           <motion.div 
-            className="pt-8 pb-6" 
+            className="py-12"
             initial={{ opacity: 0, y: 10 }} 
             animate={{ opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }}
           >
-            <span className="text-xs tracking-widest text-[var(--text-tertiary)] block mb-2">
+            <span className="text-md tracking-widest text-[var(--text-tertiary)] block mb-2">
               RITSUMEISAI 2025
             </span>
-            <h1 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">
+            <h1 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)]">
               タイムライン
             </h1>
           </motion.div>
