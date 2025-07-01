@@ -17,7 +17,7 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item }) => (
     animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }} 
     exit={{ opacity: 0, y: -10, transition: { duration: 0.5 } }}
   >
-    <div className="py-3">
+    <div className="pb-3">
       <motion.div
         className="relative bg-[var(--bg-secondary)] rounded-2xl pr-4 pl-8" 
         initial={{ scale: 0.95, opacity: 0 }} 

@@ -2,11 +2,11 @@
 
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import Image from "next/image";
 import { TabDataTypes, isEntryActive } from "@/components/timeline/types";
 import { TimelineData } from "@/components/timeline/TimelineData";
 import { TimelineEntry } from "@/components/timeline/TimelineEntry";
-import { dateOptions, DateOption, profileImages } from "@/components/timeline/constants";
+import { dateOptions, DateOption } from "@/components/timeline/constants";
+import { AuroraBackground } from "@/components/ui/aurora-background";
 
 interface TimelineProps {
   data?: TabDataTypes[];
@@ -36,84 +36,47 @@ export const Timeline: React.FC<TimelineProps> = () => {
   );
 
   return (
-    <motion.div 
-      className="min-h-screen bg-[var(--bg-primary)]" 
-      initial={{ opacity: 0 }} 
+    <motion.div
+      className="min-h-screen bg-[var(--bg-secondary)]"
+      initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.3 } }}
     >
-      {/* ヘッダーセクション */}
-      <section className="w-full">
-        <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
-          {/* タイトルセクション */}
-          <motion.div 
-            className="py-12"
-            initial={{ opacity: 0, y: 10 }} 
-            animate={{ opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }}
-          >
-            <span className="text-md tracking-widest text-[var(--text-tertiary)] block mb-2">
-              RITSUMEISAI 2025
-            </span>
-            <h1 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)]">
-              タイムライン
-            </h1>
-          </motion.div>
+      {/* ヘッダー + ナビゲーション */}
+      <AuroraBackground className="pb-20">
+        <section className="w-full">
+          <div className="max-w-max mx-auto px-4 md:px-6 lg:px-8">
+            {/* タイトルセクション（左寄せ） */}
+            <motion.div
+              className="py-12 md:py-18 lg:py-24 text-left"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.4, ease: "easeOut" },
+              }}
+            >
+              <span className="text-sm tracking-widest text-[var(--text-tertiary)] block mb-2">
+                RITSUMEISAI 2025
+              </span>
+              <h1 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">
+                タイムライン
+              </h1>
+            </motion.div>
 
-          {/* 日付セグメントコントロール */}
-          <motion.div 
-            className="relative mb-6 flex justify-center w-full"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.1, ease: "easeOut" } }}
-          >
-            <div className="w-full max-w-lg">
-              <div className="relative grid grid-cols-2 bg-[var(--surface-secondary)] rounded-xl p-1 w-full">
-                {/* 選択インジケーター */}
-                <motion.div
-                  className="absolute inset-y-1 w-[calc(50%-4px)] bg-[var(--bg-tertiary)] rounded-lg"
-                  initial={false}
-                  animate={{
-                    x: selectedDate === dateOptions[0] ? 4 : "calc(100% + 4px)",
-                  }}
-                  transition={{ type: "spring", stiffness: 500, damping: 35 }}
-                  style={{ zIndex: 1 }}
-                />
-                {/* 日付ボタン */}
-                {dateOptions.map((date) => (
-                  <button
-                    key={date}
-                    onClick={() => setSelectedDate(date)}
-                    className={`relative z-10 py-2.5 text-center font-medium text-sm transition-colors duration-200 flex-1 ${
-                      selectedDate === date 
-                            ? "text-[var(--brand-primary)]"
-                            : "text-[var(--text-primary)]"}
-                    }`}
-                    style={{ minWidth: 0 }}
-                  >
-                    {date}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* タブナビゲーション */}
-          <motion.nav 
-            role="tablist" 
-            aria-label="会場選択"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.2, ease: "easeOut" } }}
-            className="w-full my-6"
-          >
-            <div className="w-full max-w-4xl mx-auto">
-              <motion.div className="w-full">
-                <div
-                  className="
-                    grid 
-                    grid-cols-2 
-                    md:grid-cols-4 
-                    gap-4
-                    w-full
-                  "
-                >
+            {/* タブナビゲーション */}
+            <motion.nav
+              role="tablist"
+              aria-label="会場選択"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.4, delay: 0.2, ease: "easeOut" },
+              }}
+              className="w-full mb-4 md:mb-6 lg:mb-8"
+            >
+              <div className="overflow-x-auto">
+                <div className="inline-grid grid-flow-col gap-2 justify-center">
                   {filteredData.map((tab, idx) => (
                     <motion.button
                       key={tab.id}
@@ -129,83 +92,118 @@ export const Timeline: React.FC<TimelineProps> = () => {
                         transition: {
                           duration: 0.3,
                           delay: 0.3 + idx * 0.05,
-                          ease: "easeOut"
-                        }
+                          ease: "easeOut",
+                        },
                       }}
                       whileTap={{ scale: 0.97 }}
-                      className={`relative group w-full h-full flex flex-col items-center justify-center
-                        rounded-2xl px-2 py-6 transition-all duration-200
-                        ${
-                          activeTab === tab.id
-                            ? "bg-[var(--bg-tertiary)]"
-                            : "bg-[var(--surface-secondary)] hover:bg-[var(--surface-hover)]"
-                        }`}
-                      style={{
-                        minHeight: "92px",
-                      }}
+                      className={`relative group transition-all duration-200 px-3 py-2 rounded-full whitespace-nowrap ${
+                        activeTab === tab.id
+                          ? "bg-[var(--brand-primary)] text-[var(--bg-primary)]"
+                          : "bg-[var(--surface-secondary)] text-[var(--text-primary)] hover:bg-[var(--surface-hover)]"
+                      }`}
                     >
-                      {/* アクティブインジケーター */}
-                      {activeTab === tab.id && (
-                        <motion.div
-                          layoutId="activeTab"
-                          className="absolute inset-0 rounded-2xl"
-                          transition={{ type: "spring", stiffness: 500, damping: 35 }}
-                        />
-                      )}
-                      <div className="relative flex flex-col items-center z-10">
-                        <div className="mb-2">
-                          <Image
-                            src={profileImages[idx % 4]}
-                            alt=""
-                            width={32}
-                            height={32}
-                            className="w-8 h-8 rounded-full object-cover"
-                          />
-                        </div>
-                        <span className={`text-sm font-medium transition-colors duration-200
-                          ${activeTab === tab.id
-                            ? "text-[var(--brand-primary)]"
-                            : "text-[var(--text-primary)]"}
-                        `}>
-                          {tab.title}
-                        </span>
-                      </div>
+                      <span className="text-sm font-medium">{tab.title}</span>
                     </motion.button>
                   ))}
                 </div>
-              </motion.div>
-            </div>
-          </motion.nav>
-        </div>
-      </section>
+              </div>
+            </motion.nav>
+          </div>
+        </section>
+      </AuroraBackground>
 
       {/* メインコンテンツ */}
-      <main className="w-full mt-6">
-        <motion.div 
-          className="bg-[var(--bg-secondary)] rounded-t-[2rem] min-h-[calc(100vh-280px)]"
+      <main className="w-full -translate-y-20">
+        <motion.div
+          className="bg-[var(--bg-secondary)] rounded-t-[2rem]"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.3, ease: "easeOut" } }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.4, delay: 0.3, ease: "easeOut" },
+          }}
         >
-          <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-6">
-            {/* 現在アクティブなイベントのセクション */}
-            <section className="mb-6">
+          <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6 lg:py-8">
+            <div className="relative grid grid-cols-2 mb-4 md:mb-6 lg:mb-8 mx-2 md:mx-3 lg:mx-4">
+              {/* ベース下線 */}
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--surface-hover)] rounded-full" />
+
+              {/* アクティブインジケーター */}
               <motion.div
-                className="rounded-2xl bg-[var(--surface-secondary)] py-5 px-4 text-center flex flex-col items-center justify-center min-h-[64px]"
+                className="absolute bottom-0 h-0.5 bg-[var(--text-primary)]"
+                initial={false}
+                animate={{
+                  x: selectedDate === dateOptions[0] ? "0%" : "100%",
+                  width: "50%",
+                }}
+                transition={{ type: "spring", stiffness: 500, damping: 35 }}
+              />
+
+              {/* 日付ボタン */}
+              {dateOptions.map((date) => (
+                <button
+                  key={date}
+                  onClick={() => setSelectedDate(date)}
+                  className="relative pb-2 md:pb-4 lg:pb-6 text-center font-medium text-sm transition-colors duration-200"
+                >
+                  <span
+                    className={`transition-colors duration-200 ${
+                      selectedDate === date
+                        ? "text-[var(--text-primary)]"
+                        : "text-[var(--text-tertiary)]"
+                    }`}
+                  >
+                    {date}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* 現在アクティブなイベント */}
+            <section className="pb-12 md:pb-18 lg:pb-24">
+              <motion.div
+                className="rounded-2xl bg-[var(--surface-secondary)] p-4 md:p-6 lg:p-8 min-h-[64px]"
                 initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.28, ease: "easeOut" } }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.4, delay: 0.28, ease: "easeOut" },
+                }}
               >
                 {activeEntries.length > 0 ? (
                   <>
-                    <span className="text-md font-bold text-[var(--brand-primary)] mb-2 tracking-wide">現在開催中のイベント</span>
-                    {/* 複数でも全部表示したいならmapに変更 */}
-                    {activeEntries.map((item) => (
-                      <div key={item.title + item.startTime} className="w-full flex justify-center text-left">
-                        <TimelineEntry item={item} />
-                      </div>
-                    ))}
+                    <h3 className="text-md font-bold text-[var(--brand-primary)] mb-4 md:mb-6 lg:mb-8 tracking-wide text-center">
+                      現在開催中のイベント
+                    </h3>
+                    <div className="grid gap-3">
+                      {activeEntries.map((item) => (
+                        <motion.div
+                          key={`${item.title}-${item.startTime}`}
+                          className="grid grid-cols-[1fr_auto] items-center gap-4 py-3 px-4 rounded-xl bg-[var(--bg-primary)]/50 backdrop-blur-sm transition-all duration-200 hover:bg-[var(--bg-primary)]/70"
+                          whileHover={{ scale: 1.01 }}
+                          whileTap={{ scale: 0.99 }}
+                        >
+                          <div className="grid gap-1">
+                            <h4 className="text-sm font-semibold text-[var(--text-primary)]">
+                              {item.title}
+                            </h4>
+                            <div className="text-xs text-[var(--text-secondary)]">
+                              {item.startTime} - {item.endTime}
+                            </div>
+                          </div>
+                          <div className="text-right grid gap-1">
+                            {item.location && (
+                              <div className="text-xs text-[var(--text-tertiary)]">
+                                {item.location}
+                              </div>
+                            )}
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
                   </>
                 ) : (
-                  <p className="text-[var(--text-tertiary)]">
+                  <p className="text-[var(--text-tertiary)] text-center">
                     現在開催中のイベントはありません
                   </p>
                 )}
@@ -214,42 +212,45 @@ export const Timeline: React.FC<TimelineProps> = () => {
 
             {/* タイムラインエントリー（区切り線付き） */}
             <AnimatePresence mode="wait">
-              <motion.div 
-                role="tabpanel" 
+              <motion.div
+                role="tabpanel"
                 id={`tabpanel-${activeTab}`}
                 key={activeTab}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { duration: 0.3 } }}
                 exit={{ opacity: 0, transition: { duration: 0.2 } }}
-                className="space-y-3 pb-16"
               >
                 {currentTab.entries.length > 0 ? (
                   currentTab.entries.map((item, idx) => (
-                    <React.Fragment key={`${item.title}-${item.startTime}`}>
+                    <React.Fragment
+                      key={`${item.title}-${item.startTime}`}
+                    >
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
-                        animate={{ 
-                          opacity: 1, 
+                        animate={{
+                          opacity: 1,
                           y: 0,
-                          transition: { 
+                          transition: {
                             duration: 0.3,
-                            delay: 0.6 + (idx * 0.05),
-                            ease: "easeOut"
-                          }
+                            delay: 0.6 + idx * 0.05,
+                            ease: "easeOut",
+                          },
                         }}
                       >
                         <TimelineEntry item={item} />
                       </motion.div>
-                      {/* 最後以外に区切り線 */}
                       {idx !== currentTab.entries.length - 1 && (
-                        <div className="w-full h-px my-3 bg-[var(--surface-hover)] opacity-50" />
+                        <div className="w-full h-px bg-[var(--surface-hover)] opacity-50 mb-3" />
                       )}
                     </React.Fragment>
                   ))
                 ) : (
                   <motion.div
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: 1, transition: { duration: 0.3, delay: 0.6 } }}
+                    animate={{
+                      opacity: 1,
+                      transition: { duration: 0.3, delay: 0.6 },
+                    }}
                     className="text-center py-12"
                   >
                     <p className="text-[var(--text-tertiary)]">
