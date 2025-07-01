@@ -2,37 +2,72 @@
 
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { TabDataTypes, isEntryActive } from "@/components/timeline/types";
-import { TimelineData } from "@/components/timeline/TimelineData";
-import { TimelineEntry } from "@/components/timeline/TimelineEntry";
-import { dateOptions, DateOption } from "@/components/timeline/constants";
+import { Theater, Music, Sparkles, Building } from "lucide-react";
 import { AuroraBackground } from "@/components/ui/aurora-background";
+import { TimelineEntry } from "./TimelineEntry";
+import { Database } from '@/database.types';
 
-interface TimelineProps {
-  data?: TabDataTypes[];
+// ビューの型定義
+type EventView = Database["public"]["Views"]["show_arena_events"]["Row"];
+
+// データの型定義
+interface TimelineData {
+  arena: EventView[];
+  subArena: EventView[];
+  kotan: EventView[];
+  assembly: EventView[];
 }
 
-export const Timeline: React.FC<TimelineProps> = () => {
+const VENUES = [
+  { id: "arena", name: "アリーナ", icon: Theater },
+  { id: "subArena", name: "サブアリーナ", icon: Music },
+  { id: "kotan", name: "コタン", icon: Sparkles },
+  { id: "assembly", name: "アッセンブリー", icon: Building },
+] as const;
+
+type VenueId = typeof VENUES[number]["id"];
+
+const dateOptions = ["7/5", "7/6"] as const;
+type DateOption = typeof dateOptions[number];
+
+// アクティブなイベントを判定
+function isEntryActive(event: EventView): boolean {
+  if (!event.start_time || !event.end_time) return false;
+  
+  const now = new Date();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  
+  const [startH, startM] = event.start_time.split(":").map(Number);
+  const [endH, endM] = event.end_time.split(":").map(Number);
+  
+  const start = startH * 60 + startM;
+  const end = endH * 60 + endM;
+  
+  return currentMinutes >= start && currentMinutes <= end;
+}
+
+export default function TimelineClient({ data }: { data: TimelineData }) {
   const [selectedDate, setSelectedDate] = useState<DateOption>(dateOptions[0]);
-  const [activeTab, setActiveTab] = useState<string>(TimelineData[0].id);
+  const [activeTab, setActiveTab] = useState<VenueId>("arena");
 
-  const filteredData = useMemo(
-    () =>
-      TimelineData.map((tab) => ({
-        ...tab,
-        entries: tab.entries.filter((entry) => entry.date === selectedDate),
-      })),
-    [selectedDate]
-  );
+  // 現在の会場データ
+  const currentVenueData = useMemo(() => {
+    const venue = VENUES.find(v => v.id === activeTab);
+    return {
+      ...venue!,
+      entries: data[activeTab].filter(event => event.event_date === selectedDate),
+      stats: {
+        sessions: `${data[activeTab].filter(event => event.event_date === selectedDate).length}本`,
+        attendees: "未定",
+        duration: activeTab === "subArena" ? "各15分" : activeTab === "kotan" ? "各20分" : "各25分"
+      }
+    };
+  }, [data, activeTab, selectedDate]);
 
-  const currentTab = useMemo(
-    () => filteredData.find((tab) => tab.id === activeTab) || filteredData[0],
-    [activeTab, filteredData]
-  );
-
+  // アクティブなイベント
   const activeEntries = useMemo(
-    () => currentTab.entries.filter((entry) => isEntryActive(entry)),
-    [currentTab.entries]
+    () => currentVenueData.entries.filter(isEntryActive),
+    [currentVenueData.entries]
   );
 
   return (
@@ -77,14 +112,14 @@ export const Timeline: React.FC<TimelineProps> = () => {
             >
               <div className="overflow-x-auto">
                 <div className="inline-grid grid-flow-col gap-2 justify-center">
-                  {filteredData.map((tab, idx) => (
+                  {VENUES.map((venue, idx) => (
                     <motion.button
-                      key={tab.id}
+                      key={venue.id}
                       role="tab"
-                      aria-selected={activeTab === tab.id}
-                      aria-controls={`panel-${tab.id}`}
-                      id={`tab-${tab.id}`}
-                      onClick={() => setActiveTab(tab.id)}
+                      aria-selected={activeTab === venue.id}
+                      aria-controls={`panel-${venue.id}`}
+                      id={`tab-${venue.id}`}
+                      onClick={() => setActiveTab(venue.id)}
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{
                         opacity: 1,
@@ -97,12 +132,12 @@ export const Timeline: React.FC<TimelineProps> = () => {
                       }}
                       whileTap={{ scale: 0.97 }}
                       className={`relative group transition-all duration-200 px-3 py-2 rounded-full whitespace-nowrap ${
-                        activeTab === tab.id
+                        activeTab === venue.id
                           ? "bg-[var(--brand-primary)] text-[var(--bg-primary)]"
                           : "bg-[var(--surface-secondary)] text-[var(--text-primary)] hover:bg-[var(--surface-hover)]"
                       }`}
                     >
-                      <span className="text-sm font-medium">{tab.title}</span>
+                      <span className="text-sm font-medium">{venue.name}</span>
                     </motion.button>
                   ))}
                 </div>
@@ -178,23 +213,23 @@ export const Timeline: React.FC<TimelineProps> = () => {
                     <div className="grid gap-3">
                       {activeEntries.map((item) => (
                         <motion.div
-                          key={`${item.title}-${item.startTime}`}
+                          key={item.event_id}
                           className="grid grid-cols-[1fr_auto] items-center gap-4 py-3 px-4 rounded-xl bg-[var(--bg-primary)]/50 backdrop-blur-sm transition-all duration-200 hover:bg-[var(--bg-primary)]/70"
                           whileHover={{ scale: 1.01 }}
                           whileTap={{ scale: 0.99 }}
                         >
                           <div className="grid gap-1">
                             <h4 className="text-sm font-semibold text-[var(--text-primary)]">
-                              {item.title}
+                              {item.event_name}
                             </h4>
                             <div className="text-xs text-[var(--text-secondary)]">
-                              {item.startTime} - {item.endTime}
+                              {item.start_time} - {item.end_time}
                             </div>
                           </div>
                           <div className="text-right grid gap-1">
-                            {item.location && (
+                            {item.venue_name && (
                               <div className="text-xs text-[var(--text-tertiary)]">
-                                {item.location}
+                                {item.venue_name}
                               </div>
                             )}
                           </div>
@@ -220,11 +255,9 @@ export const Timeline: React.FC<TimelineProps> = () => {
                 animate={{ opacity: 1, transition: { duration: 0.3 } }}
                 exit={{ opacity: 0, transition: { duration: 0.2 } }}
               >
-                {currentTab.entries.length > 0 ? (
-                  currentTab.entries.map((item, idx) => (
-                    <React.Fragment
-                      key={`${item.title}-${item.startTime}`}
-                    >
+                {currentVenueData.entries.length > 0 ? (
+                  currentVenueData.entries.map((item, idx) => (
+                    <React.Fragment key={item.event_id}>
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{
@@ -239,7 +272,7 @@ export const Timeline: React.FC<TimelineProps> = () => {
                       >
                         <TimelineEntry item={item} />
                       </motion.div>
-                      {idx !== currentTab.entries.length - 1 && (
+                      {idx !== currentVenueData.entries.length - 1 && (
                         <div className="w-full h-px bg-[var(--surface-hover)] opacity-50 mb-3" />
                       )}
                     </React.Fragment>
@@ -265,4 +298,4 @@ export const Timeline: React.FC<TimelineProps> = () => {
       </main>
     </motion.div>
   );
-};
+}

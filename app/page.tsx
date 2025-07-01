@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import HomeScreen from "@/screen/Home";
+import TimelineScreen from '@/screen/Timeline';
 import {
   BsHouseDoor,
   BsHouseDoorFill,
@@ -18,7 +19,6 @@ import {
   BsMusicNoteList,
   BsSearch,
 } from "react-icons/bs";
-import { TimelineScreen } from "@/screen/Timeline";
 
 export default function Home() {
   return (
