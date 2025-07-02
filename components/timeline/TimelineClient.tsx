@@ -30,11 +30,6 @@ type VenueId = typeof VENUES[number]["id"];
 const dateOptions = ["7/5", "7/6"] as const;
 type DateOption = typeof dateOptions[number];
 
-const formatTime = (timeString) => {
-  if (!timeString) return '';
-  return timeString.slice(0, 5); // 秒をカット
-};
-
 // アクティブなイベントを判定
 function isEntryActive(event: EventView): boolean {
   if (!event.start_time || !event.end_time) return false;
@@ -228,7 +223,7 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
                               {item.event_name}
                             </h4>
                             <div className="text-xs text-[var(--text-secondary)]">
-                              {formatTime(item.start_time)} - {formatTime(item.end_time)}
+                              {item.start_time} - {item.end_time}
                             </div>
                           </div>
                           <div className="text-right grid gap-1">
