@@ -32,11 +32,22 @@ type DateOption = typeof dateOptions[number];
 
 // アクティブなイベントを判定
 function isEntryActive(event: EventView): boolean {
-  if (!event.start_time || !event.end_time) return false;
+  if (!event.start_time || !event.end_time || !event.event_date) return false;
   
   const now = new Date();
+  const currentMonth = now.getMonth() + 1; // JavaScriptの月は0ベースなので+1
+  const currentDate = now.getDate();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
   
+  // イベントの日付を解析（"7/5" -> month: 7, date: 5）
+  const [eventMonth, eventDate] = event.event_date.split("/").map(Number);
+  
+  // 日付が一致しない場合はfalse
+  if (currentMonth !== eventMonth || currentDate !== eventDate) {
+    return false;
+  }
+  
+  // 時間の判定
   const [startH, startM] = event.start_time.split(":").map(Number);
   const [endH, endM] = event.end_time.split(":").map(Number);
   
@@ -74,7 +85,7 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
     <motion.div
       className="min-h-screen bg-[var(--bg-secondary)]"
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1, transition: { duration: 0.3 } }}
+      animate={{ opacity: 1, transition: { duration: 0.15 } }}
     >
       {/* ヘッダー + ナビゲーション */}
       <AuroraBackground className="pb-20">
@@ -87,7 +98,7 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
               animate={{
                 opacity: 1,
                 y: 0,
-                transition: { duration: 0.4, ease: "easeOut" },
+                transition: { duration: 0.2, ease: "easeOut" },
               }}
             >
               <span className="text-sm tracking-widest text-[var(--text-tertiary)] block mb-2">
@@ -106,7 +117,7 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
               animate={{
                 opacity: 1,
                 y: 0,
-                transition: { duration: 0.4, delay: 0.2, ease: "easeOut" },
+                transition: { duration: 0.2, delay: 0.1, ease: "easeOut" },
               }}
               className="w-full mb-4 md:mb-6 lg:mb-8"
             >
@@ -125,13 +136,14 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
                         opacity: 1,
                         scale: 1,
                         transition: {
-                          duration: 0.3,
-                          delay: 0.3 + idx * 0.05,
+                          duration: 0.15,
+                          delay: 0.15 + idx * 0.025,
                           ease: "easeOut",
                         },
                       }}
-                      whileTap={{ scale: 0.97 }}
-                      className={`relative group transition-all duration-200 px-3 py-2 rounded-full whitespace-nowrap ${
+                      whileHover={{ scale: 1.015 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`relative group transition-all duration-200 ease-out px-3 py-2 rounded-full whitespace-nowrap ${
                         activeTab === venue.id
                           ? "bg-[var(--brand-primary)] text-[var(--bg-primary)]"
                           : "bg-[var(--surface-secondary)] text-[var(--text-primary)] hover:bg-[var(--surface-hover)]"
@@ -155,7 +167,7 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
           animate={{
             opacity: 1,
             y: 0,
-            transition: { duration: 0.4, delay: 0.3, ease: "easeOut" },
+            transition: { duration: 0.18, delay: 0.12, ease: "easeOut" },
           }}
         >
           <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6 lg:py-8">
@@ -171,7 +183,7 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
                   x: selectedDate === dateOptions[0] ? "0%" : "100%",
                   width: "50%",
                 }}
-                transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                transition={{ type: "spring", stiffness: 600, damping: 25 }}
               />
 
               {/* 日付ボタン */}
@@ -179,10 +191,10 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
                 <button
                   key={date}
                   onClick={() => setSelectedDate(date)}
-                  className="relative pb-2 md:pb-4 lg:pb-6 text-center font-medium text-sm transition-colors duration-200"
+                  className="relative pb-2 md:pb-4 lg:pb-6 text-center font-medium text-sm transition-colors duration-150 ease-out"
                 >
                   <span
-                    className={`transition-colors duration-200 ${
+                    className={`transition-colors duration-150 ease-out ${
                       selectedDate === date
                         ? "text-[var(--text-primary)]"
                         : "text-[var(--text-tertiary)]"
@@ -202,7 +214,7 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
                 animate={{
                   opacity: 1,
                   y: 0,
-                  transition: { duration: 0.4, delay: 0.28, ease: "easeOut" },
+                  transition: { duration: 0.15, delay: 0.1, ease: "easeOut" },
                 }}
               >
                 {activeEntries.length > 0 ? (
@@ -214,16 +226,16 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
                       {activeEntries.map((item) => (
                         <motion.div
                           key={item.event_id}
-                          className="grid grid-cols-[1fr_auto] items-center gap-4 py-3 px-4 rounded-xl bg-[var(--bg-primary)]/50 backdrop-blur-sm transition-all duration-200 hover:bg-[var(--bg-primary)]/70"
-                          whileHover={{ scale: 1.01 }}
-                          whileTap={{ scale: 0.99 }}
+                          className="grid grid-cols-[1fr_auto] items-center gap-4 py-3 px-4 rounded-xl bg-[var(--bg-primary)]/50 backdrop-blur-sm transition-all duration-150 ease-out hover:bg-[var(--bg-primary)]/70"
+                          whileHover={{ scale: 1.008 }}
+                          whileTap={{ scale: 0.995 }}
                         >
                           <div className="grid gap-1">
                             <h4 className="text-sm font-semibold text-[var(--text-primary)]">
                               {item.event_name}
                             </h4>
                             <div className="text-xs text-[var(--text-secondary)]">
-                              {item.start_time} - {item.end_time}
+                              {item.start_time?.slice(0, 5)} - {item.end_time?.slice(0, 5)}
                             </div>
                           </div>
                           <div className="text-right grid gap-1">
@@ -246,14 +258,14 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
             </section>
 
             {/* タイムラインエントリー（区切り線付き） */}
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="sync">
               <motion.div
                 role="tabpanel"
                 id={`tabpanel-${activeTab}`}
-                key={activeTab}
+                key={`${activeTab}-${selectedDate}`}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { duration: 0.3 } }}
-                exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                animate={{ opacity: 1, transition: { duration: 0 } }}
+                exit={{ opacity: 0, transition: { duration: 0 } }}
               >
                 {currentVenueData.entries.length > 0 ? (
                   currentVenueData.entries.map((item, idx) => (
@@ -264,9 +276,9 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
                           opacity: 1,
                           y: 0,
                           transition: {
-                            duration: 0.3,
-                            delay: 0.6 + idx * 0.05,
-                            ease: "easeOut",
+                            duration: 0.18,
+                            delay: idx * 0.02,
+                            ease: [0.22, 0.61, 0.36, 1],
                           },
                         }}
                       >
@@ -282,7 +294,7 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
                     initial={{ opacity: 0 }}
                     animate={{
                       opacity: 1,
-                      transition: { duration: 0.3, delay: 0.6 },
+                      transition: { duration: 0.15, delay: 0 },
                     }}
                     className="text-center py-12"
                   >

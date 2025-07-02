@@ -22,8 +22,8 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item }) => {
     <motion.article 
       className="relative" 
       initial={{ opacity: 0, y: 20 }} 
-      animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }} 
-      exit={{ opacity: 0, y: -10, transition: { duration: 0.5 } }}
+      animate={{ opacity: 1, y: 0, transition: { duration: 0.1 } }} 
+      exit={{ opacity: 0, y: -10, transition: { duration: 0.1 } }}
     >
       <div className="pb-3">
         <motion.div
@@ -53,7 +53,7 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item }) => {
               >
                 <Clock className="w-4 h-4" aria-hidden="true" />
                 <time dateTime={`${new Date().getFullYear()}-${item.event_date?.replace('/', '-')}T${item.start_time}`}>
-                  {item.start_time} – {item.end_time}
+                  {item.start_time?.slice(0, 5)} - {item.end_time?.slice(0, 5)}
                 </time>
               </motion.div>
             </div>
