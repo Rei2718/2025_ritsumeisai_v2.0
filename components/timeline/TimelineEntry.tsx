@@ -9,12 +9,6 @@ type EventView = Database["public"]["Views"]["show_arena_events"]["Row"];
 
 const tapSpring = { type: "spring" as const, stiffness: 400, damping: 30 };
 
-// 時間フォーマット
-const formatTime = (timeString) => {
-  if (!timeString) return '';
-  return timeString.slice(0, 5); // 秒カット
-};
-
 interface TimelineEntryProps {
   item: EventView;
 }
@@ -59,7 +53,7 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item }) => {
               >
                 <Clock className="w-4 h-4" aria-hidden="true" />
                 <time dateTime={`${new Date().getFullYear()}-${item.event_date?.replace('/', '-')}T${item.start_time}`}>
-                  {formatTime(item.start_time)} – {formatTime(item.end_time)}
+                  {item.start_time} – {item.end_time}
                 </time>
               </motion.div>
             </div>
