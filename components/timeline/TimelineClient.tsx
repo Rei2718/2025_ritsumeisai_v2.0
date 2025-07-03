@@ -89,7 +89,7 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
     >
       {/* ヘッダー + ナビゲーション */}
       <AuroraBackground className="pb-20">
-        <section className="w-full">
+        <section className="w-full min-h-52">
           <div className="max-w-max mx-auto px-4 md:px-6 lg:px-8">
             {/* タイトルセクション（左寄せ） */}
             <motion.div

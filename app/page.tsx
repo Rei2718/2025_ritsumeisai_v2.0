@@ -9,6 +9,7 @@ import {
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdFastfood, MdOutlineFastfood } from "react-icons/md";
 import { GoClock, GoClockFill } from 'react-icons/go';
+import FoodScreen from "@/screen/Food";
 
 export default function Home() {
   return (
@@ -20,15 +21,15 @@ export default function Home() {
       <TabsContent value="home" className="w-full">
         <HomeScreen />
       </TabsContent>
-      
+
       <TabsContent value="time" className="w-full">
         <TimelineScreen />
       </TabsContent>
-      
+
       <TabsContent value="food" className="w-full">
-        <ComingSoonScreen />
+        <FoodScreen />
       </TabsContent>
-      
+
       <TabsContent value="menu" className="w-full">
         <ComingSoonScreen />
       </TabsContent>
@@ -36,7 +37,7 @@ export default function Home() {
       {/* ボトムタブナビゲーション */}
       <TabsList className="fixed bottom-0 left-0 right-0 pb-[env(safe-area-inset-bottom)] p-4 md:p-6 lg:p-8 w-full z-20 grid grid-cols-1 bg-transparent max-w-xl mx-auto">
         <div className="grid grid-cols-4 rounded-full h-[52px] border border-[var(--ghost_white)]/10 backdrop-blur-xs bg-[var(--surface-primary)]">
-          
+
           {/* ホームタブ */}
           <TabsTrigger
             value="home"
