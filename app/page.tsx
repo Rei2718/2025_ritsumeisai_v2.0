@@ -22,7 +22,7 @@ export default function Home() {
       <TabsContent value="time" className="w-full">
         <TimelineScreen />
       </TabsContent>
-      <TabsContent value="radio" className="w-full">
+      <TabsContent value="food" className="w-full">
         <ComingSoonScreen />
       </TabsContent>
       <TabsContent value="menu" className="w-full">
