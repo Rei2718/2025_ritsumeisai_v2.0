@@ -26,7 +26,7 @@ export default function HomeScreen() {
                 RITSUMEISAI
               </div>
             </div>
-            <div className=" text-2xl md:text-3xl lg:text-4xl mb-4">
+            <div className="text-2xl md:text-3xl lg:text-4xl mb-4">
               Remix&sup3;
             </div>
             <div className="mb-1 text-lg sm:text-lg md:text-2xl lg:text-3xl">
