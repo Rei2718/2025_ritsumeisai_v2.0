@@ -1,4 +1,4 @@
-import { createClient } from "@/supabase/server";
+import { createClient } from "@/supabase/client";
 import { Suspense } from "react";
 import TimelineClient from "@/components/timeline/TimelineClient";
 import { Database } from '@/database.types';
@@ -34,7 +34,7 @@ export default async function TimelinePage() {
   const data = await getTimelineData();
   
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[var(--bg-secondary)]" />}>
+    <Suspense fallback={<div className="min-h-svh bg-[var(--bg-secondary)]" />}>
       <TimelineClient data={data} />
     </Suspense>
   );
