@@ -30,7 +30,7 @@ export default function Home() {
       </TabsContent>
 
       {/* Apple HIG準拠の改善を加えたタブバー */}
-      <TabsList className="fixed bottom-0 left-0 right-0 pb-[env(safe-area-inset-bottom)] p-4 md:p-6 lg:p-8 transform translate-x-0 w-full z-20 grid grid-cols-[4fr_auto] bg-transparent">
+      <TabsList className="fixed bottom-0 left-0 right-0 pb-[env(safe-area-inset-bottom)] p-4 md:p-6 lg:p-8 transform translate-x-0 w-full z-20 grid grid-cols-[4fr_auto] bg-transparent max-w-xl mx-auto">
         {/* メインナビゲーション - 元のデザインを維持 */}
         <div className="relative grid grid-cols-4 rounded-full h-[52px] border border-[var(--ghost_white)]/10 backdrop-blur-xs bg-[var(--surface-primary)]">
           <TabsTrigger
