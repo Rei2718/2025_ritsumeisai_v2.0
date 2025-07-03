@@ -29,8 +29,8 @@ export default function HomeScreen() {
             <div className="mb-1 text-lg sm:text-lg md:text-2xl lg:text-3xl">
               2025.7.5 (Sat) - 2025.7.6 (Sun)
             </div>
-            <div className="text-base sm:text-base md:text-base lg:text-lg">
-              ~  ~
+            <div className="text-md sm:text-lg md:text-xl lg:text-2xl">
+              Remix²
             </div>
 
           </div>

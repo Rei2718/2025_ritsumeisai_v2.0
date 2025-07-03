@@ -19,14 +19,11 @@ export default function Home() {
       <TabsContent value="home" className="w-full">
         <HomeScreen />
       </TabsContent>
-      <TabsContent value="new" className="w-full">
+      <TabsContent value="time" className="w-full">
         <TimelineScreen />
       </TabsContent>
       <TabsContent value="radio" className="w-full">
         <ComingSoonScreen />
-      </TabsContent>
-      <TabsContent value="library" className="w-full">
-        <HomeScreen />
       </TabsContent>
       <TabsContent value="menu" className="w-full">
         <ComingSoonScreen />
@@ -46,7 +43,7 @@ export default function Home() {
           </TabsTrigger>
 
           <TabsTrigger
-            value="new"
+            value="time"
             className="group w-full rounded-full transition-all duration-200 ease-in-out text-[var(--muted_white)] data-[state=active]:text-[var(--honeydew)] py-3"
             aria-label="新着"
           >
