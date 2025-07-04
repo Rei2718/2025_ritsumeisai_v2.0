@@ -48,7 +48,7 @@ export function CarouselPlugin() {
     },
     {
       id: 4,
-      title: "ピザ・軽食",
+      title: "ピザ",
       description: "手軽に楽しめる一品",
       icon: <Pizza className="w-full h-full" />,
       gradient: "from-green-500/20 to-emerald-500/20"

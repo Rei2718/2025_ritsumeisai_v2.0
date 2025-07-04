@@ -1,11 +1,19 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Theater, Music, Sparkles, Building } from "lucide-react";
+import { Theater, Music, Sparkles, Building, MapPin, Clock } from "lucide-react";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { TimelineEntry } from "./TimelineEntry";
 import { Database } from '@/database.types';
+import { createClient } from "@/supabase/client";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
 
 // ビューの型定義
 type EventView = Database["public"]["Views"]["show_arena_events"]["Row"];
@@ -57,9 +65,11 @@ function isEntryActive(event: EventView): boolean {
   return currentMinutes >= start && currentMinutes <= end;
 }
 
-export default function TimelineClient({ data }: { data: TimelineData }) {
+export default function TimelineClient({ data: initialData }: { data: TimelineData }) {
   const [selectedDate, setSelectedDate] = useState<DateOption>(dateOptions[0]);
   const [activeTab, setActiveTab] = useState<VenueId>("arena");
+  const [selectedEvent, setSelectedEvent] = useState<EventView | null>(null);
+  const [data, setData] = useState<TimelineData>(initialData);
 
   // 現在の会場データ
   const currentVenueData = useMemo(() => {
@@ -80,6 +90,45 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
     () => currentVenueData.entries.filter(isEntryActive),
     [currentVenueData.entries]
   );
+
+  // リアルタイム監視
+  useEffect(() => {
+    const supabase = createClient();
+    
+    // eventsテーブルの変更を監視
+    const channel = supabase
+      .channel('events_changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'events',
+        },
+        async () => {
+          // イベントテーブルに変更があった場合、全てのビューのデータを再取得
+          const [arena, subArena, kotan, assembly] = await Promise.all([
+            supabase.from("show_arena_events").select("*"),
+            supabase.from("show_subarena_events").select("*"), 
+            supabase.from("show_kotan_events").select("*"),
+            supabase.from("show_assembly_events").select("*"),
+          ]);
+
+          setData({
+            arena: arena.data || [],
+            subArena: subArena.data || [],
+            kotan: kotan.data || [],
+            assembly: assembly.data || [],
+          });
+        }
+      )
+      .subscribe();
+
+    // クリーンアップ
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
   return (
     <motion.div
@@ -282,7 +331,10 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
                           },
                         }}
                       >
-                        <TimelineEntry item={item} />
+                        <TimelineEntry 
+                          item={item} 
+                          onClick={setSelectedEvent}
+                        />
                       </motion.div>
                       {idx !== currentVenueData.entries.length - 1 && (
                         <div className="w-full h-px bg-[var(--surface-hover)] opacity-50 mb-3" />
@@ -308,6 +360,59 @@ export default function TimelineClient({ data }: { data: TimelineData }) {
           </div>
         </motion.div>
       </main>
+
+      {/* イベント詳細Drawer */}
+      <Drawer open={!!selectedEvent} onOpenChange={(open) => !open && setSelectedEvent(null)}>
+        <DrawerContent 
+          style={{ 
+            backgroundColor: 'var(--bg-secondary)'
+          }}
+        >
+          <DrawerHeader className="text-left px-4 md:px-6 lg:px-8 pt-8 md:pt-12 lg:pt-16">
+            <div className="flex justify-start space-x-0">
+
+              <DrawerTitle className="text-2xl md:text-3xl text-left" style={{ color: 'var(--text-primary)' }}>
+                {selectedEvent?.event_name}
+              </DrawerTitle>
+            </div>
+
+            <DrawerDescription className="text-left pt-2 md:pt-3 lg:pt-4" style={{ color: 'var(--text-secondary)' }}>
+              {"Presented by : " + selectedEvent?.organizer_name}
+            </DrawerDescription>
+            <div className="flex justify-start space-x-4 pt-2 md:pt-3 lg:pt-4">
+              {/* 時間情報 */}
+              <div className="flex items-center text-sm" style={{ color: 'var(--text-secondary)' }}>
+                <Clock className="w-4 h-4" />
+                <span>
+                  {selectedEvent?.event_date} {selectedEvent?.start_time?.slice(0, 5)} - {selectedEvent?.end_time?.slice(0, 5)}
+                </span>
+              </div>
+
+              {/* 会場情報 */}
+              {selectedEvent?.venue_name && (
+                <div className="flex items-center text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  <MapPin className="w-4 h-4" />
+                  <span>{selectedEvent.venue_name}</span>
+                </div>
+              )}
+            </div>
+          </DrawerHeader>
+
+          <div className="px-4 md:px-6 lg:px-8">
+            {/* 説明文 */}
+            {selectedEvent?.description && (
+              <div>
+                <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
+                  詳細
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                  {selectedEvent.description}
+                </p>
+              </div>
+            )}
+          </div>
+        </DrawerContent>
+      </Drawer>
     </motion.div>
   );
 }

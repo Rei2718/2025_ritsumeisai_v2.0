@@ -73,7 +73,7 @@ function DrawerContent({
         {...props}
       >
         <div 
-          className="z-50 mx-auto mt-4 md:mt-6 lg:mt-8 hidden h-1.5 w-[60px] shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block"
+          className="z-50 mx-auto mt-4 hidden h-1.5 w-[60px] shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block"
           style={{
             backgroundColor: 'rgba(255, 255, 255, 0.3)'
           }}
@@ -89,7 +89,7 @@ function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="drawer-header"
       className={cn(
-        "grid gap-0.5 p-4 -translate-y-[22px] group-data-[vaul-drawer-direction=bottom]/drawer-content:text-center group-data-[vaul-drawer-direction=top]/drawer-content:text-center md:gap-1.5 md:text-left",
+        "grid gap-0.5 -translate-y-[22px] group-data-[vaul-drawer-direction=bottom]/drawer-content:text-center group-data-[vaul-drawer-direction=top]/drawer-content:text-center md:gap-1.5 md:text-left",
         className
       )}
       {...props}
