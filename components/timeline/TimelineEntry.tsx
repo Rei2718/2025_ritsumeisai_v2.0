@@ -67,7 +67,7 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item, onClick }) =
                 exit={{ scale: 0.8, transition: { duration: 0.3 } }} 
                 style={{ 
                   backgroundColor: `var(--${pointColor})`, 
-                  color: `var(--text-primary)` 
+                  color: `var(--bg-primary)` 
                 }}
               >
                 {item.status}

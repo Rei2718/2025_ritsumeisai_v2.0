@@ -18,6 +18,7 @@ import {
 import { Database } from '@/database.types';
 import { cn } from "@/lib/utils";
 import { CarouselPlugin } from "./Foodcarousel";
+import Loading from "@/app/loading";
 
 type Vendor = Database["public"]["Tables"]["food_vendors"]["Row"];
 type VendorWithItems = Database["public"]["Views"]["vendor_with_items"]["Row"];
@@ -291,12 +292,7 @@ export default function FoodClient({ vendors }: FoodClientProps) {
             </h3>
 
             {loadingItems ? (
-              <div className="text-center py-8">
-                <div 
-                  className="inline-block animate-spin rounded-full h-8 w-8 border-b-2"
-                  style={{ borderColor: 'var(--brand-primary)' }}
-                ></div>
-              </div>
+              <Loading />
             ) : uniqueItems.length > 0 ? (
               <div className="divide-y" style={{ borderColor: 'var(--border-subtle)' }}>
                 {uniqueItems.map((item) => (
