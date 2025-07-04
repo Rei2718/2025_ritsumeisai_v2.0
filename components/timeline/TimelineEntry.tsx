@@ -2,17 +2,19 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { MapPin, Clock } from "lucide-react";
+import { Clock, ArrowUpRight } from "lucide-react";
 import { Database } from '@/database.types';
+import { cn } from "@/lib/utils";
 
 type EventView = Database["public"]["Views"]["show_arena_events"]["Row"];
 
 interface TimelineEntryProps {
   item: EventView;
   onClick?: (item: EventView) => void;
+  isActive?: boolean;
 }
 
-export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item, onClick }) => {
+export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item, onClick, isActive = false }) => {
   // カラー番号を取得（c1 -> 1）
   const colorNum = parseInt(item.organizer_color?.replace("c", "") || "1");
   const pointColor = `point_${colorNum > 6 ? (colorNum % 6) + 1 : colorNum}`;
@@ -26,7 +28,14 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item, onClick }) =
     >
       <div className="pb-3">
         <motion.div
-          className="relative bg-[var(--bg-secondary)] rounded-2xl pr-4 pl-8 cursor-pointer group transition-all duration-200" 
+          className={cn(
+            "relative rounded-2xl pr-4 pl-8 cursor-pointer group transition-all duration-200",
+            isActive && "slow-pulse"
+          )}
+          style={{ 
+            backgroundColor: isActive ? 'rgba(255, 235, 59, 0.2)' : 'var(--bg-secondary)',
+            borderColor: isActive ? 'rgba(255, 235, 59, 0.4)' : 'transparent',
+          }}
           initial={{ scale: 0.95, opacity: 0 }} 
           animate={{ scale: 1, opacity: 1, transition: { duration: 0.4 } }} 
           exit={{ scale: 0.95, opacity: 0, transition: { duration: 0.4 } }}
@@ -41,7 +50,8 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item, onClick }) =
           />
 
           <motion.header 
-            className="flex justify-between items-center mb-2 text-[var(--text-secondary)] text-sm" 
+            className="flex justify-between items-center mb-3 text-base" 
+            style={{ color: 'var(--text-secondary)' }}
             initial={{ opacity: 0, y: -5 }} 
             animate={{ opacity: 1, y: 0, transition: { delay: 0.1, duration: 0.3 } }} 
             exit={{ opacity: 0, y: -5, transition: { duration: 0.3 } }}
@@ -61,7 +71,7 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item, onClick }) =
             </div>
             {item.status && (
               <motion.span 
-                className="inline-block px-2 py-1 text-xs font-medium rounded-lg" 
+                className="inline-block px-3 py-1.5 text-base font-medium rounded-lg" 
                 initial={{ scale: 0.8 }} 
                 animate={{ scale: 1, transition: { delay: 0.2, duration: 0.3 } }} 
                 exit={{ scale: 0.8, transition: { duration: 0.3 } }} 
@@ -75,37 +85,50 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item, onClick }) =
             )}
           </motion.header>
 
-          <motion.h3 
-            className="mb-2 text-lg md:text-xl font-semibold text-[var(--text-primary)]" 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.3 } }} 
-            exit={{ opacity: 0, transition: { duration: 0.3 } }}
-          >
-            {item.event_name}
-          </motion.h3>
+          <div className="grid grid-cols-[1fr_auto] gap-4 items-end">
+            <div>
+              <motion.h3 
+                className="mb-3 text-lg md:text-xl font-semibold"
+                style={{ color: 'var(--text-primary)' }}
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 1, transition: { delay: 0.3, duration: 0.3 } }} 
+                exit={{ opacity: 0, transition: { duration: 0.3 } }}
+              >
+                {item.event_name}
+              </motion.h3>
 
-          {item.description && (
-            <motion.p 
-              className="mb-4 text-sm leading-relaxed text-[var(--text-tertiary)] line-clamp-2" 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1, transition: { delay: 0.4, duration: 0.3 } }} 
-              exit={{ opacity: 0, transition: { duration: 0.3 } }}
-            >
-              {item.description}
-            </motion.p>
-          )}
+              {item.description && (
+                <motion.p 
+                  className="mb-4 text-base leading-relaxed line-clamp-2"
+                  style={{ color: 'var(--text-tertiary)' }}
+                  initial={{ opacity: 0 }} 
+                  animate={{ opacity: 1, transition: { delay: 0.4, duration: 0.3 } }} 
+                  exit={{ opacity: 0, transition: { duration: 0.3 } }}
+                >
+                  {item.description}
+                </motion.p>
+              )}
+            </div>
 
-          {item.venue_name && (
-            <motion.footer 
-              className="flex items-center text-xs text-[var(--text-secondary)] gap-1" 
-              initial={{ opacity: 0, y: 5 }} 
-              animate={{ opacity: 1, y: 0, transition: { delay: 0.6, duration: 0.3 } }} 
-              exit={{ opacity: 0, y: 5, transition: { duration: 0.3 } }}
+            {/* 矢印アイコン */}
+            <motion.div 
+              className="p-2.5 rounded-lg mb-4"
+              style={{ 
+                backgroundColor: 'var(--surface-hover)',
+                color: 'var(--text-primary)'
+              }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ 
+                opacity: 1, 
+                scale: 1,
+                transition: { delay: 0.5, duration: 0.3 }
+              }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <MapPin className="w-4 h-4" aria-hidden="true" />
-              <span>{item.venue_name}</span>
-            </motion.footer>
-          )}
+              <ArrowUpRight className="w-4 h-4" />
+            </motion.div>
+          </div>
         </motion.div>
       </div>
     </motion.article>

@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/drawer";
 import { Database } from '@/database.types';
 import { cn } from "@/lib/utils";
-import { CarouselPlugin } from "./Foodcarousel";
 import Loading from "@/app/loading";
 
 type Vendor = Database["public"]["Tables"]["food_vendors"]["Row"];
@@ -79,43 +78,58 @@ export default function FoodClient({ vendors }: FoodClientProps) {
     >
         {/* ヘッダー */}
         <AuroraBackground className="pb-20">
-            <section className="w-full min-h-40">
-                <div className="max-w-max mx-auto px-4 md:px-6 lg:px-8 overflow-x-auto">
-                    {/* タイトルセクション */}
-                    <motion.div
-                        className="py-12 md:py-18 lg:py-24 text-left min-w-[400px]"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{
-                            opacity: 1,
-                            y: 0,
-                            transition: { duration: 0.2, ease: "easeOut" },
-                    }}
-                    >
-                        <span className="text-sm tracking-widest block mb-2" style={{ color: 'var(--text-tertiary)' }}>
-                            RITSUMEISAI 2025
-                        </span>
-                        <h1 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
-                            フード
-                        </h1>
-                    </motion.div>
-                </div>
-                <CarouselPlugin />
-            </section>
-        </AuroraBackground>
+          <section className="w-full min-h-40">
+              <div className="max-w-max mx-auto px-4 md:px-6 lg:px-8 overflow-x-auto">
+                  {/* タイトルセクション */}
+                  <motion.div
+                      className="py-12 md:py-18 lg:py-24 text-left min-w-[400px]"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{
+                          opacity: 1,
+                          y: 0,
+                          transition: { duration: 0.2, ease: "easeOut" },
+                  }}
+                  >
+                      <span className="text-sm tracking-widest block mb-2" style={{ color: 'var(--text-tertiary)' }}>
+                          RITSUMEISAI 2025
+                      </span>
+                      <h1 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                          フード
+                      </h1>
+                  </motion.div>
+              </div>
+          </section>
+      </AuroraBackground>
 
-      {/* メインコンテンツ */}
-      <main className="w-full -translate-y-20">
-        <motion.div
-          className="rounded-t-[2rem]"
-          style={{ backgroundColor: 'var(--bg-secondary)' }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.18, delay: 0.12, ease: "easeOut" },
-          }}
-        >
-          <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
+    {/* メインコンテンツ */}
+    <main className="w-full -translate-y-20">
+      <motion.div
+        className="rounded-t-[2rem]"
+        style={{ backgroundColor: 'var(--bg-secondary)' }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.18, delay: 0.12, ease: "easeOut" },
+        }}
+      >
+        <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
+            {/* 現在アクティブなイベント */}
+            <section className="pb-12 md:pb-18 lg:pb-24">
+              <motion.div
+                className="rounded-2xl bg-[var(--surface-secondary)] p-4 md:p-6 lg:p-8 min-h-[64px]"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.15, delay: 0.1, ease: "easeOut" },
+                }}
+              >
+                  <p className="text-[var(--text-tertiary)] text-center">
+                    No status
+                  </p>
+              </motion.div>
+            </section>
             {/* 店舗グリッド */}
             {vendors.length > 0 ? (
               <motion.div
