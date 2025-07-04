@@ -26,7 +26,7 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item, onClick }) =
     >
       <div className="pb-3">
         <motion.div
-          className="relative bg-[var(--bg-secondary)] rounded-2xl pr-4 pl-8 cursor-pointer group transition-all duration-200 hover:bg-[var(--surface-hover)]" 
+          className="relative bg-[var(--bg-secondary)] rounded-2xl pr-4 pl-8 cursor-pointer group transition-all duration-200" 
           initial={{ scale: 0.95, opacity: 0 }} 
           animate={{ scale: 1, opacity: 1, transition: { duration: 0.4 } }} 
           exit={{ scale: 0.95, opacity: 0, transition: { duration: 0.4 } }}

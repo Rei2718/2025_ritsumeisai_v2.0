@@ -187,14 +187,6 @@ export default function FoodClient({ vendors }: FoodClientProps) {
                           </motion.div>
                         </div>
                       </div>
-
-                      {/* ホバーエフェクト */}
-                      <div 
-                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl"
-                        style={{ 
-                          background: 'linear-gradient(to right, transparent, var(--brand-primary) 20%)' 
-                        }}
-                      />
                     </motion.div>
                   </motion.article>
                 ))}
