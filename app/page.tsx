@@ -1,12 +1,10 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import HomeScreen from "@/screen/Home";
 import TimelineScreen from '@/screen/Timeline';
-import ComingSoonScreen from "@/screen/CommingSoon";
 import {
   BsHouseDoor,
   BsHouseDoorFill,
 } from "react-icons/bs";
-import { HiMenuAlt3 } from "react-icons/hi";
 import { MdFastfood, MdGroups, MdOutlineFastfood, MdOutlineGroups } from "react-icons/md";
 import { GoClock, GoClockFill } from 'react-icons/go';
 import FoodScreen from "@/screen/Food";
@@ -36,13 +34,16 @@ export default function Home() {
         <FoodScreen />
       </TabsContent>
 
+      {/* 
       <TabsContent value="menu" className="w-full">
         <ComingSoonScreen />
       </TabsContent>
+      */}
 
       {/* ボトムタブナビゲーション */}
       <TabsList className="fixed bottom-0 left-0 right-0 pb-[env(safe-area-inset-bottom)] p-4 md:p-6 lg:p-8 w-full z-20 grid grid-cols-1 bg-transparent max-w-xl mx-auto">
-        <div className="grid grid-cols-5 rounded-full h-[52px] border border-[var(--ghost_white)]/10 backdrop-blur-xs bg-[var(--surface-primary)]">
+        {/* grid!!!!!!!!!!!!! */}
+        <div className="grid grid-cols-4 rounded-full h-[52px] border border-[var(--ghost_white)]/10 backdrop-blur-xs bg-[var(--surface-primary)]">
 
           {/* ホームタブ */}
           <TabsTrigger
@@ -84,7 +85,7 @@ export default function Home() {
             <MdFastfood className="scale-140 hidden group-data-[state=active]:block" />
           </TabsTrigger>
 
-          {/* メニュータブ */}
+          {/* メニュータブ
           <TabsTrigger
             value="menu"
             className="group w-full rounded-full transition-all duration-200 ease-in-out text-[var(--muted_white)] data-[state=active]:text-[var(--honeydew)] py-3"
@@ -92,6 +93,7 @@ export default function Home() {
           >
             <HiMenuAlt3 className="scale-140" />
           </TabsTrigger>
+          */}
         </div>
       </TabsList>
     </Tabs>
