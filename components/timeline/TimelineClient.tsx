@@ -156,7 +156,7 @@ export default function TimelineClient({ data: initialData }: { data: TimelineDa
           aria-hidden="true" 
         />
 
-        <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
+        <div className="py-5 grid grid-cols-[1fr_auto] gap-4 items-center">
           <div className="grid gap-1">
             <div className="flex items-center gap-2 text-base" style={{ color: 'var(--text-secondary)' }}>
               <Clock className="w-4 h-4" aria-hidden="true" />
