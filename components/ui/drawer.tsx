@@ -37,9 +37,12 @@ function DrawerOverlay({
     <DrawerPrimitive.Overlay
       data-slot="drawer-overlay"
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-[var(--bg-primary)]/50",
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50",
         className
       )}
+      style={{
+        backgroundColor: 'rgba(18, 18, 20, 0.8)' // var(--bg-primary) with opacity
+      }}
       {...props}
     />
   )
@@ -56,16 +59,25 @@ function DrawerContent({
       <DrawerPrimitive.Content
         data-slot="drawer-content"
         className={cn(
-          "group/drawer-content bg-[var(--bg-tertiary)] fixed z-50 flex flex-col h-auto",
+          "group/drawer-content fixed z-50 flex flex-col h-auto",
           "data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:mb-24 data-[vaul-drawer-direction=top]:max-h-[90svh] min-h-[80svh] data-[vaul-drawer-direction=top]:rounded-b-[2rem]",
           "data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:mt-24 data-[vaul-drawer-direction=bottom]:max-h-[90svh] min-h-[80svh] data-[vaul-drawer-direction=bottom]:rounded-t-[2rem]",
           "data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-3/4 data-[vaul-drawer-direction=right]:sm:max-w-sm",
           "data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:w-3/4 data-[vaul-drawer-direction=left]:sm:max-w-sm",
           className
         )}
+        style={{
+          backgroundColor: 'var(--brand-primary)',
+          background: 'linear-gradient(180deg, var(--brand-primary) 0%, var(--brand-tertiary) 100%)'
+        }}
         {...props}
       >
-        <div className="bg-[var(--surface-hover)] mx-auto mt-4 md:mt-6 lg:mt-8  hidden h-1.5 w-[60px] shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block" />
+        <div 
+          className="z-50 mx-auto mt-4 md:mt-6 lg:mt-8 hidden h-1.5 w-[60px] shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block"
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.3)'
+          }}
+        />
         {children}
       </DrawerPrimitive.Content>
     </DrawerPortal>
@@ -102,7 +114,10 @@ function DrawerTitle({
   return (
     <DrawerPrimitive.Title
       data-slot="drawer-title"
-      className={cn("text-[var(--text-primary)] font-semibold", className)}
+      className={cn("font-semibold", className)}
+      style={{
+        color: 'var(--bg-primary)' // Dark text on orange background
+      }}
       {...props}
     />
   )
@@ -115,7 +130,10 @@ function DrawerDescription({
   return (
     <DrawerPrimitive.Description
       data-slot="drawer-description"
-      className={cn("text-[var(--text-secondary)] text-sm", className)}
+      className={cn("text-sm", className)}
+      style={{
+        color: 'rgba(18, 18, 20, 0.8)' // Dark text with slight transparency
+      }}
       {...props}
     />
   )

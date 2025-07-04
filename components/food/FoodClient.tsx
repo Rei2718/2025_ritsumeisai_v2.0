@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/drawer";
 import { Database } from '@/database.types';
 import { cn } from "@/lib/utils";
+import { CarouselPlugin } from "./Foodcarousel";
 
 type Vendor = Database["public"]["Tables"]["food_vendors"]["Row"];
 type VendorWithItems = Database["public"]["Views"]["vendor_with_items"]["Row"];
@@ -70,7 +71,8 @@ export default function FoodClient({ vendors }: FoodClientProps) {
 
   return (
     <motion.div
-      className="min-h-screen bg-[var(--bg-secondary)]"
+      className="min-h-screen"
+      style={{ backgroundColor: 'var(--bg-secondary)' }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.15 } }}
     >
@@ -88,21 +90,23 @@ export default function FoodClient({ vendors }: FoodClientProps) {
                             transition: { duration: 0.2, ease: "easeOut" },
                     }}
                     >
-                        <span className="text-sm tracking-widest text-[var(--text-tertiary)] block mb-2">
+                        <span className="text-sm tracking-widest block mb-2" style={{ color: 'var(--text-tertiary)' }}>
                             RITSUMEISAI 2025
                         </span>
-                        <h1 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">
+                        <h1 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
                             フード
                         </h1>
                     </motion.div>
                 </div>
+                <CarouselPlugin />
             </section>
         </AuroraBackground>
 
       {/* メインコンテンツ */}
       <main className="w-full -translate-y-20">
         <motion.div
-          className="bg-[var(--bg-secondary)] rounded-t-[2rem]"
+          className="rounded-t-[2rem]"
+          style={{ backgroundColor: 'var(--bg-secondary)' }}
           initial={{ opacity: 0, y: 20 }}
           animate={{
             opacity: 1,
@@ -110,7 +114,7 @@ export default function FoodClient({ vendors }: FoodClientProps) {
             transition: { duration: 0.18, delay: 0.12, ease: "easeOut" },
           }}
         >
-          <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6 lg:py-8">
+          <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
             {/* 店舗グリッド */}
             {vendors.length > 0 ? (
               <motion.div
@@ -135,26 +139,28 @@ export default function FoodClient({ vendors }: FoodClientProps) {
                     className="relative"
                   >
                     <motion.div
-                      className="relative bg-[var(--bg-secondary)] rounded-2xl pr-4 pl-8 cursor-pointer group"
+                      className="relative rounded-2xl pr-4 pl-8 cursor-pointer group"
+                      style={{ backgroundColor: 'var(--bg-secondary)' }}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => setSelectedVendor(vendor)}
                     >
                       {/* 左側のバー（タイムラインスタイル） */}
                       <span 
-                        className="absolute left-0 w-[6px] top-1 bottom-1 rounded-full bg-[var(--point_3)]" 
+                        className="absolute left-0 w-[6px] top-1 bottom-1 rounded-full" 
+                        style={{ backgroundColor: 'var(--point_3)' }}
                         aria-hidden="true" 
                       />
 
                       <div className="py-4">
                         {/* タイトル */}
-                        <h3 className="font-semibold text-[var(--text-primary)] truncate mb-1">
+                        <h3 className="font-semibold truncate mb-1" style={{ color: 'var(--text-primary)' }}>
                           {vendor.vendor_name}
                         </h3>
                         
                         {/* 説明文 - 最大幅使用 */}
                         {vendor.description && (
-                          <p className="text-sm text-[var(--text-secondary)] mb-2 leading-relaxed">
+                          <p className="text-sm mb-2 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                             {vendor.description}
                           </p>
                         )}
@@ -162,14 +168,18 @@ export default function FoodClient({ vendors }: FoodClientProps) {
                         {/* ブース番号とアイコンを横並び */}
                         <div className="grid grid-cols-[1fr_auto] gap-4 items-end">
                           {vendor.booth_number && (
-                            <p className="text-sm text-[var(--text-tertiary)]">
+                            <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
                               {vendor.booth_number}
                             </p>
                           )}
                           
                           {/* 矢印アイコン */}
                           <motion.div 
-                            className="p-2 rounded-lg bg-[var(--surface-hover)] text-[var(--text-primary)]"
+                            className="p-2 rounded-lg"
+                            style={{ 
+                              backgroundColor: 'var(--surface-hover)',
+                              color: 'var(--text-primary)'
+                            }}
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.95 }}
                           >
@@ -179,7 +189,12 @@ export default function FoodClient({ vendors }: FoodClientProps) {
                       </div>
 
                       {/* ホバーエフェクト */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[var(--brand-primary)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl" />
+                      <div 
+                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl"
+                        style={{ 
+                          background: 'linear-gradient(to right, transparent, var(--brand-primary) 20%)' 
+                        }}
+                      />
                     </motion.div>
                   </motion.article>
                 ))}
@@ -190,7 +205,7 @@ export default function FoodClient({ vendors }: FoodClientProps) {
                 animate={{ opacity: 1 }}
                 className="text-center py-20"
               >
-                <p className="text-[var(--text-tertiary)]">
+                <p style={{ color: 'var(--text-tertiary)' }}>
                   該当する店舗が見つかりませんでした
                 </p>
               </motion.div>
@@ -201,10 +216,15 @@ export default function FoodClient({ vendors }: FoodClientProps) {
 
       {/* 店舗詳細Drawer */}
       <Drawer open={!!selectedVendor} onOpenChange={(open) => !open && setSelectedVendor(null)}>
-        <DrawerContent className={cn(
-          "max-h-[90svh] bg-[var(--bg-secondary)] overflow-hidden",
-          selectedVendor?.main_image_url && "[&>div:first-child]:bg-white/80 [&>div:first-child]:shadow-lg [&>div:first-child]:z-10 [&>div:first-child]:relative"
-        )}>
+        <DrawerContent 
+          className={cn(
+            "max-h-[90svh] overflow-hidden",
+            selectedVendor?.main_image_url && "[&>div:first-child]:bg-white/80"
+          )}
+          style={{ 
+            backgroundColor: 'var(--bg-secondary)'
+          }}
+        >
           {/* 背景画像（ヘッダー部分のみ） */}
           {selectedVendor?.main_image_url && (
             <div className="absolute inset-x-0 top-0 h-[280px] overflow-hidden rounded-t-[2rem]">
@@ -216,38 +236,56 @@ export default function FoodClient({ vendors }: FoodClientProps) {
                 sizes="100vw"
                 priority
               />
-              {/* グラデーションオーバーレイ - 上部を濃くしてハンドルの視認性を確保 */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70" />
+              {/* グラデーションオーバーレイ */}
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7))'
+                }}
+              />
             </div>
           )}
           
           <DrawerHeader className="text-left p-0 flex-shrink-0 relative h-[280px] flex flex-col justify-end px-4 md:px-6 lg:px-8">
             {/* コンテンツ */}
             <div className="relative z-10 mb-4 md:mb-6 lg:mb-8">
-              <DrawerTitle className={cn(
-                "text-2xl md:text-3xl text-left",
-                selectedVendor?.main_image_url 
-                  ? "text-white drop-shadow-lg" 
-                  : "text-[var(--text-primary)]"
-              )}>
+              <DrawerTitle 
+                className={cn(
+                  "text-2xl md:text-3xl text-left",
+                  selectedVendor?.main_image_url && "drop-shadow-lg"
+                )}
+                style={{
+                  color: selectedVendor?.main_image_url 
+                    ? 'var(--ghost_white)' 
+                    : 'var(--text-primary)'
+                }}
+              >
                 {selectedVendor?.vendor_name}
               </DrawerTitle>
-              <DrawerDescription className={cn(
-                "text-left mt-1",
-                selectedVendor?.main_image_url 
-                  ? "text-white/90 drop-shadow-md" 
-                  : "text-[var(--text-secondary)]"
-              )}>
+              <DrawerDescription 
+                className={cn(
+                  "text-left mt-1",
+                  selectedVendor?.main_image_url && "drop-shadow-md"
+                )}
+                style={{
+                  color: selectedVendor?.main_image_url 
+                    ? 'var(--alice_blue)' 
+                    : 'var(--text-secondary)'
+                }}
+              >
                 {selectedVendor?.description}
               </DrawerDescription>
             </div>
           </DrawerHeader>
 
           {/* スクロール可能なコンテンツエリア */}
-          <div className="flex-grow overflow-y-auto bg-[var(--bg-secondary)] px-4 md:px-6 lg:px-8">
+          <div 
+            className="flex-grow overflow-y-auto px-4 md:px-6 lg:px-8"
+            style={{ backgroundColor: 'var(--bg-secondary)' }}
+          >
             {/* 店舗情報 */}
             {selectedVendor && selectedVendor.location && (
-              <div className="mb-6 text-sm text-[var(--text-secondary)]">
+              <div className="mb-6 text-sm" style={{ color: 'var(--text-secondary)' }}>
                 <div className="flex items-center gap-1">
                   <MapPin className="w-4 h-4" />
                   <span>{selectedVendor.location}</span>
@@ -256,30 +294,35 @@ export default function FoodClient({ vendors }: FoodClientProps) {
             )}
 
             {/* メニュー */}
-            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4 text-left">
+            <h3 className="text-lg font-semibold mb-4 text-left" style={{ color: 'var(--text-primary)' }}>
               メニュー
             </h3>
 
             {loadingItems ? (
               <div className="text-center py-8">
-                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]"></div>
+                <div 
+                  className="inline-block animate-spin rounded-full h-8 w-8 border-b-2"
+                  style={{ borderColor: 'var(--brand-primary)' }}
+                ></div>
               </div>
             ) : uniqueItems.length > 0 ? (
-              <div className="divide-y divide-[var(--border-subtle)]">
+              <div className="divide-y" style={{ borderColor: 'var(--border-subtle)' }}>
                 {uniqueItems.map((item) => (
                   <div
                     key={item.item_id}
                     className="grid grid-cols-[1fr_auto] gap-4 py-3 items-center"
                   >
-                    <span className="text-[var(--text-primary)] text-left">{item.item_name}</span>
-                    <span className="font-semibold text-[var(--brand-primary)] text-right">
+                    <span className="text-left" style={{ color: 'var(--text-primary)' }}>
+                      {item.item_name}
+                    </span>
+                    <span className="font-semibold text-right" style={{ color: 'var(--brand-primary)' }}>
                       {formatPrice(item.price)}
                     </span>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-center text-[var(--text-tertiary)] py-8">
+              <p className="text-center py-8" style={{ color: 'var(--text-tertiary)' }}>
                 メニュー情報がありません
               </p>
             )}
@@ -287,7 +330,19 @@ export default function FoodClient({ vendors }: FoodClientProps) {
 
           <DrawerFooter className="px-6 pb-6 flex-shrink-0">
             <DrawerClose asChild>
-              <button className="w-full py-2 bg-[var(--surface-secondary)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--surface-hover)] transition-colors">
+              <button 
+                className="w-full py-2 rounded-lg transition-colors"
+                style={{
+                  backgroundColor: 'var(--surface-secondary)',
+                  color: 'var(--text-primary)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--surface-hover)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--surface-secondary)';
+                }}
+              >
                 閉じる
               </button>
             </DrawerClose>
