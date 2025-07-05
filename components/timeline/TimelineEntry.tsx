@@ -69,20 +69,6 @@ export const TimelineEntry: React.FC<TimelineEntryProps> = ({ item, onClick, isA
                 </time>
               </motion.div>
             </div>
-            {item.status && (
-              <motion.span 
-                className="inline-block px-3 py-1.5 text-base font-medium rounded-lg" 
-                initial={{ scale: 0.8 }} 
-                animate={{ scale: 1, transition: { delay: 0.2, duration: 0.3 } }} 
-                exit={{ scale: 0.8, transition: { duration: 0.3 } }} 
-                style={{ 
-                  backgroundColor: `var(--${pointColor})`, 
-                  color: `var(--bg-primary)` 
-                }}
-              >
-                {item.status}
-              </motion.span>
-            )}
           </motion.header>
 
           <div className="grid grid-cols-[1fr_auto] gap-4 items-end">
