@@ -126,7 +126,7 @@ export default function FoodClient({ vendors }: FoodClientProps) {
                 }}
               >
                   <p className="text-[var(--text-tertiary)] text-center">
-                    混雑中
+                    やや混雑中
                   </p>
               </motion.div>
             </section>
